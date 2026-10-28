@@ -33,6 +33,7 @@ jobs:
             ".dockerignore"
             ".gitignore"
             "README.md"
+            "pytest.ini"
             "tests/test_api.py"
           )
           for file in "${REQUIRED_FILES[@]}"; do
@@ -50,8 +51,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Pytest Suite
+        env:
+          PYTHONPATH: .
         run: |
-          pytest -v --tb=short
+          python -m pytest -v --tb=short
 
   docker-build:
     name: Build & Smoke-Test Docker Image
